@@ -1,8 +1,24 @@
 import requests
-import time
 import random
 import threading
 import logging
+import pymongo
+from pymongo import MongoClient
+import time
+
+# MongoDB Connection
+MONGODB_CONNECTION_STRING = '<YOUR_MONGODB_CONNECTION_STRING>'
+client = MongoClient(MONGODB_CONNECTION_STRING)
+taxi_collection = client['TaxiCoopDB']['Taxis']
+location_collection = client['TaxiCoopDB']['location']
+
+# Taxi Names and Types for Simulation
+taxi_names = ["Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot"]
+taxi_types = ["Luxury", "Deluxe", "Economy"]
+
+# Define the lat/long box for the service area
+LAT_MIN, LAT_MAX = 40.0, 41.0
+LONG_MIN, LONG_MAX = -74.0, -73.0
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -11,7 +27,7 @@ logging.basicConfig(level=logging.INFO)
 NUM_TAXIS = 50
 
 # Base URL for the API that will ingest taxi location updates
-API_URL = "https://your-api-endpoint/taxi/updateLocation"
+#API_URL = "https://your-api-endpoint/taxi/updateLocation"
 
 # Define the lat/long box for the service area
 LAT_MIN, LAT_MAX = 40.0, 41.0
